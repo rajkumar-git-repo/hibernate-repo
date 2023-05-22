@@ -1,13 +1,11 @@
-package com.hibernate.dao;
+package com.hibernate.daoUtil;
 
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.Metadata;
 import org.hibernate.boot.MetadataSources;
 import org.hibernate.boot.registry.StandardServiceRegistry;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
-
-import javax.annotation.Resource;
-import java.io.File;
+import org.hibernate.cfg.Configuration;
 
 public class HibernateUtil {
 
@@ -21,6 +19,8 @@ public class HibernateUtil {
             synchronized (HibernateUtil.class) {
                 if (SESSION_FACTORY == null) {
                     try {
+                        Configuration configuration = new Configuration();
+                        configuration.configure("hibernate.cfg.xml");
                         final StandardServiceRegistry registry = new StandardServiceRegistryBuilder().configure().build();
                         Metadata meta = new MetadataSources(registry).getMetadataBuilder().build();
                         SESSION_FACTORY = meta.getSessionFactoryBuilder().build();
